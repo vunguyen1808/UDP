@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <pthread.h>
+#include "thread_v.h"
 
 
 
@@ -10,8 +12,6 @@
 
 int sock, length;
 struct sockaddr_in server;
-socklen_t address_length;
-char* message = (char*) malloc (sizeof(char)*200);//[200];
 
 int main()
 {
@@ -21,22 +21,34 @@ int main()
 			perror("Opening socket");
 
 	length = sizeof(server);
-//	bzero(&server,length);
-
+  
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port=htons(SERVER_PORT);
-
+	server.sin_port = htons(SERVER_PORT);
 
 // bind
 	if(bind(sock, (struct sockaddr *)&server, length)<0)
 			perror("binding");
-
-	address_length = sizeof(struct sockaddr_in);
-//receivefrom
-	printf("%p \n",message);
-	recvfrom (sock, message, 200, 0, (struct sockaddr*)&server, &address_length );
-
-	printf("%s\n", message);
+  
+// receive and process message from client
+  pthread_t threads[MAX_THREADS];
+  int thread_no = 0;
+  while (1){
+    Request* request = (Request*) malloc (sizeof (Request));
+    request->fromlen = sizeof (struct sockaddr_in);
+    
+    int n = recvfrom (sock, request->buf, PACK_SIZE, 0, (struct sockaddr*)&request->from, &request->fromlen );
+    if (n<0) perror ("recvfrom:");
+    printf("%s\n", request->buf);
+    
+    int rc = pthread_create (&threads[thread_no], 0, handle_request, (void*)request);
+    if(rc){
+      printf ("can't process the message");
+    }
+    else{
+      thread_no++;
+    }
+  }
+	
 	return 0;
 }
