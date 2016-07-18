@@ -7,11 +7,12 @@
 #include "thread_v.h"
 
 
-
 #define SERVER_PORT 7747
 
 int sock, length;
 struct sockaddr_in server;
+struct Thread *h_thread = NULL;							// list of threads - sorted on connection id
+pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;		// To Access the list of threads - for connection id
 
 int main()
 {

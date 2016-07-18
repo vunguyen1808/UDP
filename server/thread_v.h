@@ -10,10 +10,9 @@
 #include <netdb.h>
 #include <stdio.h>
 #include <pthread.h>
-// #include "packet.h"
+#include "packet_v.h"
 
 #define MAX_THREADS 3			// Maximum number of threads that can be served at a time
-#define PACK_SIZE 270
 
 struct Request{
 	socklen_t fromlen;
