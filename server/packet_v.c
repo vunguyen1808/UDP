@@ -29,6 +29,7 @@ void parse_packet(char *packet_str, struct Packet& packet)
 	// buffer //
 	short buf_byte = 0;
 	while((packet.buffer[buf_byte++] = packet_str[byte_no++]) != '\0');
+<<<<<<< HEAD
 }
 
 void ptos(short conn_id, enum packet_type type, short status, char *fpath, char *packet_str){
@@ -53,4 +54,6 @@ void allzero(char *str, int size){
 		str[buf_byte++] = '0';
 	}
 	str[buf_byte] = '\0';
+=======
+>>>>>>> c1090a55233a0f84d4ca0b0bc590734c3a3368d2
 }

@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include "thread_v.h"
+<<<<<<< HEAD
 extern int sock;
 extern pthread_mutex_t mutex1;
 extern struct Thread *h_thread;		// list of threads - sorted on connection id
 char buffer[BUF_SIZE], filename[BUF_SIZE];
+=======
+
+extern pthread_mutex_t mutex1;
+extern struct Thread *h_thread;		// list of threads - sorted on connection id
+
+>>>>>>> c1090a55233a0f84d4ca0b0bc590734c3a3368d2
 
 void* handle_request (void* argv)
 {
@@ -13,6 +20,7 @@ void* handle_request (void* argv)
   
   char /*buffer[BUF_SIZE], */filename[BUF_SIZE];
 	struct Packet packet;
+<<<<<<< HEAD
   printf("initial packet.status = %d\n",packet.status);
   parse_packet (packet_str, packet);
   
@@ -81,3 +89,11 @@ short insert_thread(){
 	return (new_thread->connection_id = (lpt->connection_id + 1));	
 }
 
+=======
+  
+  parse_packet (packet_str, packet);
+  
+  
+  
+}
+>>>>>>> c1090a55233a0f84d4ca0b0bc590734c3a3368d2

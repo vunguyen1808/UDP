@@ -10,7 +10,11 @@
 
 int sock;
 char message [] = "congacon vit";
+<<<<<<< HEAD
 struct sockaddr_in server, from;
+=======
+struct sockaddr_in server;
+>>>>>>> c1090a55233a0f84d4ca0b0bc590734c3a3368d2
 struct hostent* hp;
 
 int main()
@@ -21,6 +25,7 @@ int main()
 
 	server.sin_family = AF_INET;
 	server.sin_port = htons(SERVER_PORT);
+<<<<<<< HEAD
 	inet_aton("127.0.0.1" , &server.sin_addr);
 
   struct Packet packet;
@@ -82,5 +87,34 @@ int main()
   sendto (sock, packet_str, strlen(packet_str), 0, (struct sockaddr*)&server, sizeof(struct sockaddr_in));
   
   close (sock);
+=======
+ //	server.sin_addr = inet_addr("127.0.0.1");
+	inet_aton("127.0.0.1" , &server.sin_addr);
+
+  // hp = gethostbyname(argv[1]);
+  // if(!hp)
+    // error("Unknown host");
+
+  struct Packet packet;
+  char filename[BUF_SIZE], packet_str[PACK_SIZE], buffer[BUF_SIZE];
+	bzero(filename, BUF_SIZE);
+  
+//enter the name of file
+  printf ("Pls enter the name of file: ");
+  scanf ("%s",filename);
+  
+  bzero(buffer, BUF_SIZE);
+	bzero(packet_str, PACK_SIZE);
+  
+  strcpy(buffer, filename);
+  strcpy(packet_str, "");
+  
+  ptos (-1, REQUEST, 0, buffer, packet_str);
+  // printf ("\npacket_str to be sent: %s \n", packet_str);
+//sendto
+	int n = sendto(sock, packet_str, strlen(packet_str), 0, (const struct sockaddr*)&server, sizeof(struct sockaddr_in));
+  if (n<0) perror ("sendto");
+  
+>>>>>>> c1090a55233a0f84d4ca0b0bc590734c3a3368d2
   return 0;
 }
